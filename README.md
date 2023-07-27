@@ -7,7 +7,7 @@ This project is a work in progress Selenium test automation solution written in 
 ## Prerequisites
 
 - [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0)
-- [Google Chrome](https://www.google.com/chrome/) (for running tests using Chrome WebDriver)
+- [Google Chrome](https://www.google.com/chrome/) Version 115.0.5790.110 (Official Build) (64-bit) (for running tests using Chrome WebDriver) 
 
 ## Setup Instructions
 
