@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is a work in progress Selenium test automation solution written in C# using .NET 6. It aims to automate testing for Enaxis Software. 
+This project is a work in progress Selenium test automation solution written in C# using .NET 6. It aims to automate testing for Enaxis webapps. 
 
 ## Prerequisites
 
