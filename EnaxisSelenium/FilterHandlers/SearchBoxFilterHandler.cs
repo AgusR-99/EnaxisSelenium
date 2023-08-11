@@ -1,7 +1,8 @@
-﻿using EnaxisSelenium.Helpers;
+﻿using EnaxisSelenium.FilterHandlers.Contracts;
+using EnaxisSelenium.Helpers;
 using OpenQA.Selenium;
 
-namespace EnaxisSelenium.TestSortingHelpers
+namespace EnaxisSelenium.FilterHandlers
 {
     public class SearchBoxFilterHandler : IFilterHandler
     {

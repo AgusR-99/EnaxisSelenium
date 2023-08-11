@@ -1,4 +1,4 @@
-﻿namespace EnaxisSelenium.Foo.Contracts
+﻿namespace EnaxisSelenium.ColumnSorterHandlers.Contracts
 {
     public interface ISortableTable
     {

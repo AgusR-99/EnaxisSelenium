@@ -1,7 +1,7 @@
-﻿using EnaxisSelenium.Foo.Contracts;
+﻿using EnaxisSelenium.ColumnSorterHandlers.Contracts;
 using OpenQA.Selenium;
 
-namespace EnaxisSelenium.Foo
+namespace EnaxisSelenium.ColumnSorterHandlers
 {
     public class DefaultColumnSorter : IColumnSorter
     {

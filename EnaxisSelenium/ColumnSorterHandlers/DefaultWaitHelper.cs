@@ -1,8 +1,9 @@
-﻿using OpenQA.Selenium;
+﻿using EnaxisSelenium.ColumnSorterHandlers.Contracts;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
-namespace EnaxisSelenium.Foo.Contracts
+namespace EnaxisSelenium.ColumnSorterHandlers
 {
     public class DefaultWaitHelper : IWaitHelper
     {

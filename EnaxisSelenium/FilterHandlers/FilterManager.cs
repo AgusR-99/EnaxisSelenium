@@ -1,6 +1,8 @@
-﻿using OpenQA.Selenium;
+﻿using EnaxisSelenium.FilterHandlers.Contracts;
+using EnaxisSelenium.TestSortingHelpers;
+using OpenQA.Selenium;
 
-namespace EnaxisSelenium.TestSortingHelpers
+namespace EnaxisSelenium.FilterHandlers
 {
     public class FilterManager
     {

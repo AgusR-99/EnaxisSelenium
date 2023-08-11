@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 
-namespace EnaxisSelenium.Foo.Contracts
+namespace EnaxisSelenium.ColumnSorterHandlers.Contracts
 {
     public interface IWaitHelper
     {

@@ -1,4 +1,4 @@
-﻿using EnaxisSelenium.Summary;
+﻿using EnaxisSelenium.SummaryHandlers;
 using OpenQA.Selenium;
 
 namespace EnaxisSelenium.ColumnSorterHandlers.Contracts

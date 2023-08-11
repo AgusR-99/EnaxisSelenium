@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 
-namespace EnaxisSelenium.TestSortingHelpers
+namespace EnaxisSelenium.FilterHandlers.Contracts
 {
     public interface IFilterHandler
     {

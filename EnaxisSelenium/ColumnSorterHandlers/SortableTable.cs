@@ -1,9 +1,9 @@
-﻿using EnaxisSelenium.Foo.Contracts;
+﻿using EnaxisSelenium.ColumnSorterHandlers.Contracts;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
-namespace EnaxisSelenium.Foo
+namespace EnaxisSelenium.ColumnSorterHandlers
 {
     public class SortableTable : ISortableTable
     {

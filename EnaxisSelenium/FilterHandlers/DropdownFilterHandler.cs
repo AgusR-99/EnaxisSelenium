@@ -1,10 +1,11 @@
-﻿using EnaxisSelenium.Helpers;
+﻿using EnaxisSelenium.FilterHandlers.Contracts;
+using EnaxisSelenium.Helpers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using System.Collections.ObjectModel;
 
-namespace EnaxisSelenium.TestSortingHelpers
+namespace EnaxisSelenium.FilterHandlers
 {
     public class DropdownFilterHandler : IFilterHandler
     {
