@@ -69,7 +69,9 @@ namespace EnaxisSelenium.TestSortingHelpers
 
                     var applyFiltersButton = webDriver.FindElement(By.Id("CTRL_SQLFilters_FiltroButton"));
 
-                    var filterRowId = filterRow.GetAttribute("id");
+                    string filterRowId = "";
+
+                    filterRowId = filterRow.GetAttribute("id");
 
                     applyFiltersButton.Click();
 
@@ -89,17 +91,26 @@ namespace EnaxisSelenium.TestSortingHelpers
                     }
 
                     // Refresh element
-                    filterRow = webDriver.FindElement(By.Id(filterRowId));
+                    try
+                    {
+                        filterRow = webDriver.FindElement(By.Id(filterRowId));
 
-                    if (filterRow != null)
-                    {
-                        filterDropDown = filterRow.FindElement(By.ClassName("ms-parent"));
+                        if (filterRow != null)
+                        {
+                            filterDropDown = filterRow.FindElement(By.ClassName("ms-parent"));
+                        }
+                        else
+                        {
+                            Console.WriteLine($"    - Warning: Filter row '{optionText}' not found after refresh.");
+                            break;
+                        }
                     }
-                    else
+                    catch (Exception)
                     {
-                        Console.WriteLine($"    - Warning: Filter row '{optionText}' not found after refresh.");
-                        break;
+                        Console.WriteLine("COMPATIBILITY ERROR: Select Filter Id does not exist. Cannot continue test.");
+                        throw;
                     }
+
                 }
             }
 
