@@ -13,7 +13,7 @@ namespace EnaxisSelenium
     {
         private IWebDriver webDriver;
         private WebDriverWait wait;
-        private IConfiguration configuration;
+        private static IConfiguration configuration;
 
         private string loginUrl => GetSetting("LoginUrl");
         private string tableUrl => GetSetting("TableUrl");
@@ -29,17 +29,19 @@ namespace EnaxisSelenium
             webDriver = new ChromeDriver(options);
 
             wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(30));
-
-            // Load appsettings.json configuration
-            var configBuilder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-            configuration = configBuilder.Build();
         }
 
         private string GetSetting(string key) => configuration.GetSection("TestSettings")[key];
 
+        private static List<string> GetTableUrls()
+        {
+            var configBuilder = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+            configuration = configBuilder.Build();
+            var foo = configuration.GetSection("TestSettings:TableUrls").GetChildren().Select(x => x.Value).ToList();
+            return foo;
+        }
 
-        [Test]
         public void TestLogin()
         {
             try
@@ -71,7 +73,8 @@ namespace EnaxisSelenium
         }
 
         [Test]
-        public void TestSorting()
+        [TestCaseSource(nameof(GetTableUrls))]
+        public void TestSorting(string tableUrl)
         {
             TestLogin();
             webDriver.Navigate().GoToUrl(tableUrl);
@@ -80,7 +83,11 @@ namespace EnaxisSelenium
 
             Console.WriteLine("Number of sortable columns in the table: " + columnCount);
 
-            Assert.Multiple(() =>
+
+
+        [Test]
+        [TestCaseSource(nameof(GetTableUrls))]
+        public void FilterTest(string tableUrl)
             {
                 var defaultWaitHelper = new DefaultWaitHelper();
 
