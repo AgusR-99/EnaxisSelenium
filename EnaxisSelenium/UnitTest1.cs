@@ -1,14 +1,11 @@
-using EnaxisSelenium.Foo;
-using EnaxisSelenium.Foo.Contracts;
-using EnaxisSelenium.Helpers;
+using EnaxisSelenium.ColumnSorterHandlers;
+using EnaxisSelenium.Summary;
 using EnaxisSelenium.TestSortingHelpers;
 using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
-using System;
-using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace EnaxisSelenium
 {

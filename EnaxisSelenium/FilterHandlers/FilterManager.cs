@@ -1,6 +1,4 @@
 ﻿using OpenQA.Selenium;
-using System;
-using System.Collections.ObjectModel;
 
 namespace EnaxisSelenium.TestSortingHelpers
 {
