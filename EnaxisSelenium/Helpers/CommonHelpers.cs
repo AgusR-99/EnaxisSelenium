@@ -1,5 +1,4 @@
-﻿using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using System.Text.RegularExpressions;
 
 namespace EnaxisSelenium.Helpers
@@ -20,6 +19,17 @@ namespace EnaxisSelenium.Helpers
             var headerCells = tableElement.FindElements(By.XPath(".//tr[1]/th"));
 
             // Count the number of header cells, which represents the number of columns in the table
+            int columnCount = headerCells.Count;
+
+            return columnCount;
+        }
+
+        public static int GetSortableColumnCount(IWebDriver webDriver)
+        {
+            var tableElement = webDriver.FindElement(By.Id("ctl00_FiltersDataGrid"));
+
+            var headerCells = tableElement.FindElements(By.XPath(".//tr[1]/th/a"));
+
             int columnCount = headerCells.Count;
 
             return columnCount;
