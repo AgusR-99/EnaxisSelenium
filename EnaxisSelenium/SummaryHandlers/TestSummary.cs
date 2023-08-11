@@ -25,7 +25,7 @@ namespace EnaxisSelenium.SummaryHandlers
             logMessages.Add((stopwatch.Elapsed, actionName, timeTaken));
         }
 
-        public void PrintSummary(string title, ITestSummaryExporter exporter, string outputDirectory = "C:\\Users\\agus-\\OneDrive\\Documentos\\Logs")
+        public void PrintSummary(string title, ITestSummaryExporter exporter, string outputDirectory)
         {
             // Generate a timestamp-based filename
             string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");

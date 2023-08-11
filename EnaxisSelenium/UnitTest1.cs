@@ -18,6 +18,7 @@ namespace EnaxisSelenium
         private string loginUrl => GetSetting("LoginUrl");
         private string username => GetSetting("Username");
         private string password => GetSetting("Password");
+        private string xlsxOutputDirectory => GetSetting("XlsxOutputDirectory");
         private TestSummary summary = new TestSummary();
 
         [SetUp]
@@ -171,7 +172,7 @@ namespace EnaxisSelenium
         private void ExportTestSummary()
         {
             var excelExporter = new ExcelTestSummaryExporter();
-            summary.PrintSummary(GetMainTitle(), excelExporter);
+            summary.PrintSummary(GetMainTitle(), excelExporter, xlsxOutputDirectory);
         }
 
 

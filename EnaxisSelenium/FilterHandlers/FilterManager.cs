@@ -1,5 +1,4 @@
 ﻿using EnaxisSelenium.FilterHandlers.Contracts;
-using EnaxisSelenium.TestSortingHelpers;
 using OpenQA.Selenium;
 
 namespace EnaxisSelenium.FilterHandlers
