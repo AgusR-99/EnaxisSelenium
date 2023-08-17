@@ -10,7 +10,7 @@ namespace EnaxisSelenium.FilterHandlers
         private readonly IWebDriver webdriver;
         private readonly bool isFastVariation;
 
-        public FilterManager(IWebDriver webdriver, string tableUrl, bool isFastVariation = false)
+        public FilterManager(IWebDriver webdriver, bool isFastVariation = false)
         {
             dropdownFilterHandler = new DropdownFilterOptionHandler(webdriver);
             searchBoxFilterHandler = new SearchBoxFilterHandler(webdriver);
@@ -23,7 +23,7 @@ namespace EnaxisSelenium.FilterHandlers
         /// </summary>
         /// <param name="webdriver">The web driver used for interacting with the web page.</param>
         /// <param name="filterRow">The filter row element to be processed.</param>
-        public void HandleFilter(IWebElement filterRow)
+        public void HandleFilter(IWebElement filterRow, string tableUrl)
         {
             var filterDropDownList = filterRow.FindElements(By.ClassName("ms-parent"));
 
@@ -39,7 +39,7 @@ namespace EnaxisSelenium.FilterHandlers
                 {
                     dropdownFilterHandler.HandleFullFilterOption(filterRow);
                 }
-                webdriver.Navigate().Refresh();
+                webdriver.Navigate().GoToUrl(tableUrl);
 
             }
             else
@@ -49,7 +49,7 @@ namespace EnaxisSelenium.FilterHandlers
                 {
                     Console.WriteLine("--- Filter type: Searchbox ---");
                     searchBoxFilterHandler.HandleFilter(filterRow);
-                    webdriver.Navigate().Refresh();
+                    webdriver.Navigate().GoToUrl(tableUrl);
                 }
                 else
                 {
