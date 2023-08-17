@@ -7,6 +7,8 @@ namespace EnaxisSelenium.SummaryHandlers
     {
         public void Export(List<(TimeSpan ElapsedTime, string Action, TimeSpan? TimeTaken)> logMessages, string outputPath)
         {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
             using (var excelPackage = new ExcelPackage())
             {
                 var worksheet = excelPackage.Workbook.Worksheets.Add("Summary");
