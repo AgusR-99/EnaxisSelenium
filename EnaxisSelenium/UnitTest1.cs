@@ -154,16 +154,12 @@ namespace EnaxisSelenium
         private void ApplyFilters(FilterManager filterManager, IReadOnlyList<IWebElement> filterRows)
         {
             var filteringTimer = Stopwatch.StartNew();
-            foreach (var filterRow in filterRows)
+            for (int i = 0; i < filterRows.Count; i++)
             {
-                var filterRowText = filterRow.Text;
-                filterManager.HandleFilter(webDriver, filterRow);
+                filterManager.HandleFilter(webDriver, filterRows[i]);
 
                 // Refresh the filterRows collection to avoid stale elements
                 filterRows = webDriver.FindElements(By.CssSelector("tr.XMLFilterRow"));
-
-                // Find the updated filterRow element in the refreshed collection
-                var updatedFilterRow = filterRows.FirstOrDefault(fr => fr.Text == filterRowText);
             }
             filteringTimer.Stop();
             summary.LogTime("Filtering Test", filteringTimer.Elapsed);
