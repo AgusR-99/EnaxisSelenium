@@ -118,7 +118,27 @@ namespace EnaxisSelenium
             var filterRows = webDriver.FindElements(By.CssSelector("tr.XMLFilterRow"));
             LogFilterCount(filterRows.Count);
 
-            var filterManager = new FilterManager(tableUrl);
+            var filterManager = new FilterManager(webDriver, tableUrl);
+            ApplyFilters(filterManager, filterRows);
+
+            ExportTestSummary();
+        }
+
+        [Test]
+        [TestCaseSource(nameof(GetTableUrls))]
+        public void FilterTestFast(string tableUrl)
+        {
+            summary = new TestSummary();
+
+            TestLogin();
+            NavigateToTable(tableUrl);
+            var MainTitle = GetMainTitle();
+            LogMainTitle(MainTitle);
+
+            var filterRows = webDriver.FindElements(By.CssSelector("tr.XMLFilterRow"));
+            LogFilterCount(filterRows.Count);
+
+            var filterManager = new FilterManager(webDriver, tableUrl, isFastVariation: true);
             ApplyFilters(filterManager, filterRows);
 
             ExportTestSummary();
@@ -156,7 +176,7 @@ namespace EnaxisSelenium
             var filteringTimer = Stopwatch.StartNew();
             for (int i = 0; i < filterRows.Count; i++)
             {
-                filterManager.HandleFilter(webDriver, filterRows[i]);
+                filterManager.HandleFilter(filterRows[i]);
 
                 // Refresh the filterRows collection to avoid stale elements
                 filterRows = webDriver.FindElements(By.CssSelector("tr.XMLFilterRow"));
