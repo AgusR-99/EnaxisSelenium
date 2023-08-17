@@ -4,6 +4,6 @@ namespace EnaxisSelenium.FilterHandlers.Contracts
 {
     public interface IFilterHandler
     {
-        void HandleFilter(IWebDriver webdriver, IWebElement filterRow);
+        void HandleFilter(IWebElement filterRow);
     }
 }
