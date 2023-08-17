@@ -10,18 +10,20 @@ namespace EnaxisSelenium.FilterHandlers
     public class DropdownFilterHandler : IFilterHandler
     {
         private readonly string tableUrl;
+        private readonly IWebDriver webDriver;
 
-        public DropdownFilterHandler(string tableUrl)
+        public DropdownFilterHandler(string tableUrl, IWebDriver webDriver)
         {
             this.tableUrl = tableUrl;
+            this.webDriver = webDriver;
         }
 
         /// <summary>
         /// Handles filtering using the dropdown filter for a specific filter row.
         /// </summary>
-        /// <param name="webDriver">The web driver used for interacting with the web page.</param>
         /// <param name="filterRow">The filter row element to be processed.</param>
-        public void HandleFilter(IWebDriver webDriver, IWebElement filterRow)
+        /// 
+        public void HandleFilter(IWebElement filterRow)
         {
             var filterDropDown = filterRow.FindElement(By.ClassName("ms-parent"));
             var options = filterDropDown.FindElements(By.TagName("li"));

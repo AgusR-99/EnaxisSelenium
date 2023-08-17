@@ -118,7 +118,27 @@ namespace EnaxisSelenium
             var filterRows = webDriver.FindElements(By.CssSelector("tr.XMLFilterRow"));
             LogFilterCount(filterRows.Count);
 
-            var filterManager = new FilterManager(tableUrl);
+            var filterManager = new FilterManager(webDriver, tableUrl);
+            ApplyFilters(filterManager, filterRows);
+
+            ExportTestSummary();
+        }
+
+        [Test]
+        [TestCaseSource(nameof(GetTableUrls))]
+        public void FilterTestFast(string tableUrl)
+        {
+            summary = new TestSummary();
+
+            TestLogin();
+            NavigateToTable(tableUrl);
+            var MainTitle = GetMainTitle();
+            LogMainTitle(MainTitle);
+
+            var filterRows = webDriver.FindElements(By.CssSelector("tr.XMLFilterRow"));
+            LogFilterCount(filterRows.Count);
+
+            var filterManager = new FilterManager(webDriver, tableUrl, isFastVariation: true);
             ApplyFilters(filterManager, filterRows);
 
             ExportTestSummary();
@@ -154,16 +174,11 @@ namespace EnaxisSelenium
         private void ApplyFilters(FilterManager filterManager, IReadOnlyList<IWebElement> filterRows)
         {
             var filteringTimer = Stopwatch.StartNew();
-            foreach (var filterRow in filterRows)
+            for (int i = 0; i < filterRows.Count; i++)
             {
-                var filterRowText = filterRow.Text;
-                filterManager.HandleFilter(webDriver, filterRow);
-
+                filterManager.HandleFilter(filterRows[i]);
                 // Refresh the filterRows collection to avoid stale elements
                 filterRows = webDriver.FindElements(By.CssSelector("tr.XMLFilterRow"));
-
-                // Find the updated filterRow element in the refreshed collection
-                var updatedFilterRow = filterRows.FirstOrDefault(fr => fr.Text == filterRowText);
             }
             filteringTimer.Stop();
             summary.LogTime("Filtering Test", filteringTimer.Elapsed);
