@@ -29,7 +29,7 @@ namespace EnaxisSelenium.FilterHandlers
 
             if (filterDropDownList.Count > 0)
             {
-                /*Console.WriteLine("--- Filter type: Select ---");
+                Console.WriteLine("--- Filter type: Select ---");
 
                 if (isFastVariation)
                 {
@@ -39,7 +39,7 @@ namespace EnaxisSelenium.FilterHandlers
                 {
                     dropdownFilterHandler.HandleFullFilterOption(filterRow);
                 }
-                webdriver.Navigate().Refresh();*/
+                webdriver.Navigate().Refresh();
 
             }
             else
