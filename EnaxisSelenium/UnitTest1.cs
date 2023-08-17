@@ -176,7 +176,8 @@ namespace EnaxisSelenium
             var filteringTimer = Stopwatch.StartNew();
             for (int i = 0; i < filterRows.Count; i++)
             {
-                filterManager.HandleFilter(filterRows[i]);
+                filterManager.HandleFilter(webDriver, filterRows[i]);
+
                 // Refresh the filterRows collection to avoid stale elements
                 filterRows = webDriver.FindElements(By.CssSelector("tr.XMLFilterRow"));
             }
