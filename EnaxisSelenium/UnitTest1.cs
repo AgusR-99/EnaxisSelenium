@@ -1,11 +1,13 @@
 using EnaxisSelenium.ColumnSorterHandlers;
 using EnaxisSelenium.FilterHandlers;
+using EnaxisSelenium.Helpers;
 using EnaxisSelenium.SummaryHandlers;
 using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace EnaxisSelenium
 {
@@ -99,14 +101,16 @@ namespace EnaxisSelenium
             var sortingTestExecutor = new SortingTestExecutor();
             sortingTestExecutor.Execute(webDriver, summary);
 
-            ExportTestSummary();
+            var methodName = CommonHelpers.GetCurrentMethodName();
+
+            ExportTestSummary(methodName);
         }
 
 
 
         [Test]
         [TestCaseSource(nameof(GetTableUrls))]
-        public void FilterTest(string tableUrl)
+        public void TestFilter(string tableUrl)
         {
             summary = new TestSummary();
 
@@ -121,12 +125,14 @@ namespace EnaxisSelenium
             var filterManager = new FilterManager(webDriver, tableUrl);
             ApplyFilters(filterManager, filterRows);
 
-            ExportTestSummary();
+            var methodName = CommonHelpers.GetCurrentMethodName();
+
+            ExportTestSummary(methodName);
         }
 
         [Test]
         [TestCaseSource(nameof(GetTableUrls))]
-        public void FilterTestFast(string tableUrl)
+        public void TestFilterFast(string tableUrl)
         {
             summary = new TestSummary();
 
@@ -141,7 +147,9 @@ namespace EnaxisSelenium
             var filterManager = new FilterManager(webDriver, tableUrl, isFastVariation: true);
             ApplyFilters(filterManager, filterRows);
 
-            ExportTestSummary();
+            var methodName = CommonHelpers.GetCurrentMethodName();
+
+            ExportTestSummary(methodName);
         }
 
 
@@ -185,10 +193,10 @@ namespace EnaxisSelenium
             summary.LogTime("Filtering Test", filteringTimer.Elapsed);
         }
 
-        private void ExportTestSummary()
+        private void ExportTestSummary(string? TestName = null)
         {
             var excelExporter = new ExcelTestSummaryExporter();
-            summary.PrintSummary(GetMainTitle(), excelExporter, xlsxOutputDirectory);
+            summary.PrintSummary(GetMainTitle(), TestName, excelExporter, xlsxOutputDirectory);
         }
 
 
