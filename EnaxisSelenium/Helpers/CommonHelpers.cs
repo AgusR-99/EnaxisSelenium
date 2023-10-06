@@ -41,5 +41,13 @@ namespace EnaxisSelenium.Helpers
 
             return int.Parse(Regex.Replace(recordElement, "[^0-9]", ""));
         }
+
+        public static string GetCurrentMethodName()
+        {
+            var stackTrace = new System.Diagnostics.StackTrace();
+            var frame = stackTrace.GetFrame(1);
+            var method = frame.GetMethod();
+            return method.Name;
+        }
     }
 }

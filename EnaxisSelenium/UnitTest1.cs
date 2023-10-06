@@ -1,11 +1,13 @@
 using EnaxisSelenium.ColumnSorterHandlers;
 using EnaxisSelenium.FilterHandlers;
+using EnaxisSelenium.Helpers;
 using EnaxisSelenium.SummaryHandlers;
 using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace EnaxisSelenium
 {
@@ -99,14 +101,16 @@ namespace EnaxisSelenium
             var sortingTestExecutor = new SortingTestExecutor();
             sortingTestExecutor.Execute(webDriver, summary);
 
-            ExportTestSummary();
+            var methodName = CommonHelpers.GetCurrentMethodName();
+
+            ExportTestSummary(methodName);
         }
 
 
 
         [Test]
         [TestCaseSource(nameof(GetTableUrls))]
-        public void FilterTest(string tableUrl)
+        public void TestFilter(string tableUrl)
         {
             summary = new TestSummary();
 
@@ -118,10 +122,34 @@ namespace EnaxisSelenium
             var filterRows = webDriver.FindElements(By.CssSelector("tr.XMLFilterRow"));
             LogFilterCount(filterRows.Count);
 
-            var filterManager = new FilterManager(tableUrl);
-            ApplyFilters(filterManager, filterRows);
+            var filterManager = new FilterManager(webDriver);
+            ApplyFilters(filterManager, filterRows, tableUrl);
 
-            ExportTestSummary();
+            var methodName = CommonHelpers.GetCurrentMethodName();
+
+            ExportTestSummary(methodName);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(GetTableUrls))]
+        public void TestFilterFast(string tableUrl)
+        {
+            summary = new TestSummary();
+
+            TestLogin();
+            NavigateToTable(tableUrl);
+            var MainTitle = GetMainTitle();
+            LogMainTitle(MainTitle);
+
+            var filterRows = webDriver.FindElements(By.CssSelector("tr.XMLFilterRow"));
+            LogFilterCount(filterRows.Count);
+
+            var filterManager = new FilterManager(webDriver, isFastVariation: true);
+            ApplyFilters(filterManager, filterRows, tableUrl);
+
+            var methodName = CommonHelpers.GetCurrentMethodName();
+
+            ExportTestSummary(methodName);
         }
 
 
@@ -151,28 +179,24 @@ namespace EnaxisSelenium
             Console.WriteLine($"Found {count} filters");
         }
 
-        private void ApplyFilters(FilterManager filterManager, IReadOnlyList<IWebElement> filterRows)
+        private void ApplyFilters(FilterManager filterManager, IReadOnlyList<IWebElement> filterRows, string tableUrl)
         {
             var filteringTimer = Stopwatch.StartNew();
-            foreach (var filterRow in filterRows)
+            for (int i = 0; i < filterRows.Count; i++)
             {
-                var filterRowText = filterRow.Text;
-                filterManager.HandleFilter(webDriver, filterRow);
+                filterManager.HandleFilter(filterRows[i], tableUrl);
 
                 // Refresh the filterRows collection to avoid stale elements
                 filterRows = webDriver.FindElements(By.CssSelector("tr.XMLFilterRow"));
-
-                // Find the updated filterRow element in the refreshed collection
-                var updatedFilterRow = filterRows.FirstOrDefault(fr => fr.Text == filterRowText);
             }
             filteringTimer.Stop();
             summary.LogTime("Filtering Test", filteringTimer.Elapsed);
         }
 
-        private void ExportTestSummary()
+        private void ExportTestSummary(string? TestName = null)
         {
             var excelExporter = new ExcelTestSummaryExporter();
-            summary.PrintSummary(GetMainTitle(), excelExporter, xlsxOutputDirectory);
+            summary.PrintSummary(GetMainTitle(), TestName, excelExporter, xlsxOutputDirectory);
         }
 
 

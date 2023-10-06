@@ -25,11 +25,11 @@ namespace EnaxisSelenium.SummaryHandlers
             logMessages.Add((stopwatch.Elapsed, actionName, timeTaken));
         }
 
-        public void PrintSummary(string title, ITestSummaryExporter exporter, string outputDirectory)
+        public void PrintSummary(string title, string? TestName, ITestSummaryExporter exporter, string outputDirectory)
         {
             // Generate a timestamp-based filename
             string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-            string outputPath = Path.Combine(outputDirectory, $"{title}_{timestamp}.xlsx");
+            string outputPath = Path.Combine(outputDirectory, $"{title}_{TestName}_{timestamp}.xlsx");
 
             exporter.Export(logMessages, outputPath);
         }

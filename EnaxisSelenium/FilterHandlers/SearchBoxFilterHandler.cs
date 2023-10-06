@@ -6,19 +6,19 @@ namespace EnaxisSelenium.FilterHandlers
 {
     public class SearchBoxFilterHandler : IFilterHandler
     {
-        private readonly string tableUrl;
+        private readonly IWebDriver webDriver;
 
-        public SearchBoxFilterHandler(string tableUrl)
+        public SearchBoxFilterHandler(IWebDriver webDriver)
         {
-            this.tableUrl = tableUrl;
+            this.webDriver = webDriver;
         }
 
         /// <summary>
         /// Handles filtering using the search box filter for a specific filter row.
         /// </summary>
-        /// <param name="webDriver">The web driver used for interacting with the web page.</param>
         /// <param name="filterRow">The filter row element to be processed.</param>
-        public void HandleFilter(IWebDriver webDriver, IWebElement filterRow)
+        /// 
+        public void HandleFilter(IWebElement filterRow)
         {
             // Find the search input element for the filter row
             var filterSearchInputElement = webDriver.FindElement(By.Id("CTRL_SQLFilters_TXTFilterSearch_1"));
@@ -56,8 +56,12 @@ namespace EnaxisSelenium.FilterHandlers
                         Console.WriteLine($"      - Warning: Could not retrieve record count");
                     }
 
-                    // Navigate back to the table URL to clear the search filter
-                    webDriver.Navigate().GoToUrl(tableUrl);
+                    // Clear textbox
+                    filterSearchInputElement = webDriver.FindElement(By.Id("CTRL_SQLFilters_TXTFilterSearch_1"));
+                    filterSearchInputElement.Clear();
+
+                    applyFiltersButton = webDriver.FindElement(By.Id("CTRL_SQLFilters_FiltroButton"));
+                    applyFiltersButton.Click();
 
                     // Refresh the search input element
                     filterSearchInputElement = webDriver.FindElement(By.Id("CTRL_SQLFilters_TXTFilterSearch_1"));
